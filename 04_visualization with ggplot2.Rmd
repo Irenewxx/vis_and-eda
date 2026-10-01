@@ -1,12 +1,12 @@
-# Visualization and Eda
+---
+title: "Visualization"
+output: github_document
+date: "2026-10-01"
+---
+
+# Visualization and EDA
 
 This is visualization
-
----
-title: "visualization"
-output: github_document
-date:"2026-10-01"
----
 
 
 ```{r}
@@ -120,5 +120,15 @@ weather_df |>
   
 ```
 當你加上filter和mutate，可以用filter篩選出你要的data，然後mutate可以用來convert你要的公式
+
+
+whats a hex plot
+```{r}
+weather_df |> 
+  ggplot(aes(x = tmax, y = tmin)) + 
+  geom_hex()
+```
+如果你要做一個超過2000個data的圖，scatter plot會很messy，用hex會更好
+
 
 
