@@ -60,6 +60,32 @@ geom_smooth()的()裡面
 通常不建議加se = FALSE，因為容易看到各種斷線，如果不加，就會看到一條完整的線
 加上alpha會改變透明度
 
+```{r}
+weather_df |>
+  ggplot(aes(x = tmin, y = tmax,color = name)) + 
+  geom_smooth(se = FALSE)
+```
+用geom_smooth可以畫線條圖
 
+
+show faceting
+```{r}
+weather_df |> 
+  ggplot(aes(x = tmin, y = tmax, color = name)) + 
+  geom_point(alpha = .5) +
+  facet_grid(. ~ name)
+```
+  facet_grid(. ~ name),裡面的. ~ name代表用這個來做column
+  
+```{r}
+weather_df |> 
+  ggplot(aes(x = tmin, y = tmax, color = name)) + 
+  geom_point(alpha = .5) +
+  facet_grid(cols=vars(name))
+```
+facet_grid(cols=vars(name))和facet_grid(. ~ name)的功能是一樣的
+
+
+lets look at something else
 
 
