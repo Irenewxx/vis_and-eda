@@ -220,3 +220,176 @@ weather_df |>
 
 ![](04_visualization-with-ggplot2_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 如果你要做一個超過2000個data的圖，scatter plot會很messy，用hex會更好
+
+\##Univariate plots
+
+``` r
+weather_df |> 
+  ggplot(aes(x = tmax)) + 
+  geom_histogram()
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_bin()`).
+
+![](04_visualization-with-ggplot2_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+
+``` r
+weather_df |> 
+  ggplot(aes(x = tmax, fill = name)) + 
+  geom_histogram(position = "dodge", binwidth = 2)
+```
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_bin()`).
+
+![](04_visualization-with-ggplot2_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+加上fill去給圖加名字，然後用dodge可以給你的圖加位置
+
+``` r
+weather_df |> 
+  ggplot(aes(x = tmax, fill = name)) + 
+  geom_histogram()+
+  facet_grid(. ~ name)
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_bin()`).
+
+![](04_visualization-with-ggplot2_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+這可以用另外的方式，去區分不同group的條狀圖，但你沒辦法用這個圖，清楚的看見比較和區別
+
+Density plots are great!! density plots是smooth out 的histogram
+
+``` r
+weather_df |> 
+  ggplot(aes(x = tmax, color = name)) + 
+  geom_density()
+```
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_density()`).
+
+![](04_visualization-with-ggplot2_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+那你就可以做出“基礎版”的density plot，但有點醜喔XD
+
+``` r
+weather_df |> 
+  ggplot(aes(x = tmax, fill = name)) + 
+  geom_density(alpha=.3)
+```
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_density()`).
+
+![](04_visualization-with-ggplot2_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+然後加上一些不一樣的設定，跟上面一樣的個人化設定，你的圖就又有變化了（但還是醜www）
+
+Boxplots
+
+``` r
+weather_df |> 
+  ggplot(aes(y = tmax)) + 
+  geom_boxplot()
+```
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_boxplot()`).
+
+![](04_visualization-with-ggplot2_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+這個可以看出來distributino of temperature
+
+``` r
+weather_df |> 
+  ggplot(aes(x = name, y = tmax)) + 
+  geom_boxplot()
+```
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_boxplot()`).
+
+![](04_visualization-with-ggplot2_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+加上X軸，你可以更好的讓圖直觀的看清楚
+
+Violin plots
+
+``` r
+weather_df |> 
+  ggplot(aes(x = name, y = tmax)) + 
+  geom_violin() 
+```
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_ydensity()`).
+
+![](04_visualization-with-ggplot2_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+這樣就會得到基礎的violin-plot
+而且可以看到很完整的distribution，但老師好像更喜歡boxplot
+
+Ridge plots…
+
+``` r
+weather_df |> 
+  ggplot(aes(x = tmax, y = name)) + 
+  geom_density_ridges()
+```
+
+    ## Picking joint bandwidth of 1.54
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_density_ridges()`).
+
+![](04_visualization-with-ggplot2_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
+
+## Save some of my plots
+
+``` r
+ggp_weather=
+weather_df |> 
+  ggplot(aes(x = date, y = tmax,color=name)) + 
+  geom_point(aes(size=prcp),alpha=.5)+
+  facet_grid(. ~ name)
+ggp_weather
+```
+
+    ## Warning: Removed 19 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](04_visualization-with-ggplot2_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
+
+``` r
+ggsave("ggp_weather.pdf",ggp_weather)
+```
+
+    ## Saving 7 x 5 in image
+
+    ## Warning: Removed 19 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+這樣可以保存圖片，通常會存在你的project所在地
+
+``` r
+ggp_weather = 
+  weather_df |> 
+  ggplot(aes(x = tmin, y = tmax)) + 
+  geom_point(aes(color = name), alpha = .5) 
+
+ggsave("ggp_weather.pdf", ggp_weather, width = 8, height = 5)
+```
+
+    ## Warning: Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+``` r
+knitr::opts_chunk$set(
+  fig.width = 6,
+  fig.asp = .6,
+  out.width = "90%"
+)
+```
+
+當你使用knit的時候，保存設定好的圖會更好？？
