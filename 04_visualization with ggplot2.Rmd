@@ -5,7 +5,7 @@ This is visualization
 ---
 title: "visualization"
 output: github_document
-date:2026-10-01
+date:"2026-10-01"
 ---
 
 
@@ -23,4 +23,43 @@ Now we have everything we need!
 ```{r}
 weather_df
 ```
+
+lets make a scatter plot!
+aes限定你的x軸要放什麼，然後y軸要放什麼
+```{r}
+ggplot(weather_df, aes(x = tmin, y = tmax)) +
+  geom_point()
+```
+geom point可以做點狀圖
+
+I always like the dataframe first
+```{r}
+gg_temp_scatterpolot=
+weather_df |>
+  ggplot(aes(x = tmin, y = tmax)) + 
+  geom_point()
+gg_temp_scatterpolot
+```
+和上面的步驟是一樣的，只是告訴R你要放圖在哪個dataset,但你加上gg_temp_scatterpolot會告訴R，你暫時把圖存放在哪裡
+
+Lets make this a bit fancier...
+```{r}
+weather_df |>
+  ggplot(aes(x = tmin, y = tmax)) + 
+  geom_point(aes(color = name))
+```
+當你加上一些設定之後，你的圖會多一些變化，比如顏色的變化，這個跟你的圖的設定code有關
+
+```{r}
+weather_df |>
+  ggplot(aes(x = tmin, y = tmax)) + 
+  geom_point(aes(color = name), alpha=.25) +
+  geom_smooth()
+```
+geom_smooth()的()裡面
+通常不建議加se = FALSE，因為容易看到各種斷線，如果不加，就會看到一條完整的線
+加上alpha會改變透明度
+
+
+
 
