@@ -87,5 +87,38 @@ facet_grid(cols=vars(name))和facet_grid(. ~ name)的功能是一樣的
 
 
 lets look at something else
+```{r}
+weather_df |> 
+  ggplot(aes(x = date, y = tmax))+
+  geom_point()
+```
+你的x軸和y軸可以隨著你自己的設定改變
+
+
+```{r}
+weather_df |> 
+  ggplot(aes(x = date, y = tmax,color=name))+
+  geom_point(aes(size=prcp),alpha= .5)+
+  geom_smooth(se = FALSE)+
+  facet_grid(. ~ name)
+```
+當你在geom_smooth(se = FALSE)，就是在告訴R，你不要有SE在你的圖裡面
+然後和上面一樣，你可以加透明度和設定不同的columns
+
+
+
+make a plot of central park tmax v tmin only, and convert temperatures to fahrenheit.
+```{r}
+weather_df |> 
+  filter(name=="CentralPark_NY") |> 
+  mutate(
+    tamx=tmax*(9/5)+32,
+    tmin=tmin*(9/5)+32
+  ) |> 
+  ggplot(aes(x = tmin, y = tmax))+
+  geom_point()
+  
+```
+當你加上filter和mutate，可以用filter篩選出你要的data，然後mutate可以用來convert你要的公式
 
 
