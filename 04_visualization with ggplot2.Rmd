@@ -1,0 +1,26 @@
+# Visualization and Eda
+
+This is visualization
+
+---
+title: "visualization"
+output: github_document
+date:2026-10-01
+---
+
+
+```{r}
+library(tidyverse)
+library(ggridges)
+```
+
+```{r}
+library(p8105.datasets)
+data("weather_df")
+```
+
+Now we have everything we need!
+```{r}
+weather_df
+```
+
