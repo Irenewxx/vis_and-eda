@@ -1,0 +1,85 @@
+---
+title: "Visualization"
+output: github_document
+date: "2026-10-06"
+---
+
+# Visualization and EDA
+
+This is visualization
+
+
+```{r}
+library(tidyverse)
+library(p8105.datasets)
+```
+
+```{r}
+library(p8105.datasets)
+data("weather_df")
+```
+
+Now we have everything we need!
+Start with a scatter plot
+你可以使用設定，在圖的表現上，完整呈現你希望展示的東西
+```{r}
+weather_df |> 
+  ggplot(aes(x = tmin, y = tmax)) + 
+  geom_point(aes(color = name), alpha = .5) + 
+  labs(
+    title = "Temperature (Max vs Min)",
+    x = "Max Temperature (C)",
+    y = "Min Temperature (C)",
+    color="Location",
+    caption = "Data from NOAA for three weather stations package"
+  )
+```
+
+
+let's try some other scales
+當你使用label的時候，你可以改變label,圖片對應的label會改變
+你也可以把圖片上的位置進行相應的調整和改變
+```{r}
+weather_df |> 
+  ggplot(aes(x = tmin, y = tmax)) + 
+  geom_point(aes(color = name), alpha = .5) + 
+  labs(
+    title = "Temperature (Max vs Min)",
+    x = "Max Temperature (C)",
+    y = "Min Temperature (C)",
+    color="Location",
+    caption = "Data from NOAA for three weather stations package"
+  )+ 
+  scale_x_continuous(
+    breaks = c(-15, 0, 15),
+    labels = c("-15º C", "0", "Fifteen")+
+      scale_y_continuous(
+    trans = "sqrt", 
+    position = "right")
+  )
+```
+
+
+Lets look at color!
+當你不喜歡圖片的顏色的時候，你可以自己改圖片的顏色，用一些設定，去進行相應的改變
+  scale_color_hue可以用來改變color的scale（？）
+```{r}
+weather_df |> 
+  ggplot(aes(x = tmax, y = tmin,color=name)) + 
+  geom_point() + 
+  scale_color_hue(h = c(100, 300))
+```
+
+
+當你覺得改顏色不方便的時候，可以用viridis這個package
+```{r}
+weather_df |> 
+  ggplot(aes(x = tmax, y = tmin,color=name)) + 
+  geom_point() + 
+  viridis::scale_color_viridis(
+    name = "Location", 
+    discrete = TRUE
+  )
+```
+
+
