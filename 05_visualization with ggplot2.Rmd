@@ -194,6 +194,22 @@ weather_df |>
 ```
 
 
+Make that distribution plot
+```{r}
+weather_df |>
+  select(name,tmax,tmin) |> 
+  pivot_longer(
+    tmax:tmin,
+    names_to="observation",
+    values_to="temp"
+  ) |> 
+  ggplot(aes(x = temp, fill = observation)) +
+  geom_density(alpha = .5) + 
+  facet_grid(~name) 
+
+```
+
+
 
 
 

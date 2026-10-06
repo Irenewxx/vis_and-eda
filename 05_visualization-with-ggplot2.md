@@ -270,3 +270,23 @@ weather_df |>
     ## (`stat_boxplot()`).
 
 ![](05_visualization-with-ggplot2_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+Make that distribution plot
+
+``` r
+weather_df |>
+  select(name,tmax,tmin) |> 
+  pivot_longer(
+    tmax:tmin,
+    names_to="observation",
+    values_to="temp"
+  ) |> 
+  ggplot(aes(x = temp, fill = observation)) +
+  geom_density(alpha = .5) + 
+  facet_grid(~name) 
+```
+
+    ## Warning: Removed 34 rows containing non-finite outside the scale range
+    ## (`stat_density()`).
+
+![](05_visualization-with-ggplot2_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
